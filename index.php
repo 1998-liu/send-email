@@ -1,7 +1,11 @@
 <?php
 
+//处理跨域
+header('Access-Control-Allow-Origin:*');  
+header('Access-Control-Allow-Headers:Content-Type,dataType');
+
 $dir = dirname(__FILE__);
-require_once $dir . '/../utils/MailUtils.php';
+require_once $dir . '/utils/MailUtils.php';
 
 //收信人，邮件主题，邮件内容，附件数量，附件地址
 $receiver = $_GET['receiver'];
