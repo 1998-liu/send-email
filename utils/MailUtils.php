@@ -11,9 +11,11 @@ require_once $dir . '/../libs/PHPMailer/src/SMTP.php';
 
 class MailUtils
 {
-    public static function sendMail($toUserList, $subject, $content, $filePath = '', $num = 0)
+    public static function sendMail($ip, $toUserList, $subject, $content, $filePath = '', $num = 0)
     {
         $mail = new PHPMailer(true);
+        $log = date('Y-m-d H:i:s', time()) . " $ip: ";
+        $log_file = "/tmp/email.log";
         try {
             //服务器配置
             // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                // 调试模式输出
@@ -51,8 +53,10 @@ class MailUtils
             $mail->Body    = $content;   //邮件内容
             // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';  //如果邮件客户端不支持HTML则显示此内容
             $mail->send();
+            file_put_contents($log_file, "[success] {$log} Message has been sent\n", FILE_APPEND);
             echo "Message has been sent\n";
         } catch (Exception $e) {
+            file_put_contents($log_file, "[fail] {$log} {$mail->ErrorInfo}\n", FILE_APPEND);
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}\n";
         }
     }

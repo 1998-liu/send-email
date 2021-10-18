@@ -1,0 +1,7 @@
+.idea
+__pycache__
+*.log
+.xlsx
+index.txt
+tools.sh
+dev.sh
